@@ -1,0 +1,66 @@
+# Performance Testing Assignment
+
+---
+
+## 1. Real-World Scenarios & Test Types
+
+- **Scenario 1: Checkout during Big Billion Days (Flipkart)**
+  - Risk: Millions of users try to pay simultaneously.
+  - Test Type: **Load Testing** — ensures the system can handle expected concurrent users and transactions without slowing down.
+
+- **Scenario 2: Sudden surge at midnight when sale starts (Myntra)**
+  - Risk: Traffic spikes instantly as users rush to grab deals.
+  - Test Type: **Spike Testing** — validates stability when user load jumps abruptly in seconds/minutes.
+
+- **Scenario 3: Continuous shopping over several days of sale**
+  - Risk: Memory leaks, server fatigue, or degraded performance after long usage.
+  - Test Type: **Endurance Testing** — checks reliability and response times under sustained heavy load for hours/days.
+
+---
+
+## 2. Key Metrics for Checkout API
+
+- **Response Time**: Time taken to return a result for one request.  
+  *Why it matters*: Slow checkout frustrates users; during flash sales, even a 2‑second delay can cause cart abandonment.
+
+- **Throughput**: Number of requests processed per unit time.  
+  *Why it matters*: Indicates how many checkouts the system can handle simultaneously.
+
+- **TPS (Transactions per Second)**: Specific measure of completed transactions per second.  
+  *Why it matters*: Critical for payment APIs — shows if the system can process thousands of payments in real time.
+
+- **Error Rate**: Percentage of failed requests.  
+  *Why it matters*: High error rates during sales mean lost revenue and poor customer trust.
+
+- **Latency**: Delay between sending a request and receiving the first byte of response.  
+  *Why it matters*: Impacts perceived speed; low latency ensures smooth user experience.
+
+---
+
+## 3. Functional vs Performance Testing
+
+1. **Checking if the payment gateway processes a transaction successfully** → **Functional** (validates correctness of feature).  
+2. **Measuring how long it takes to load the product listing page with 10,000 users** → **Performance** (evaluates speed under load).  
+3. **Verifying that the search bar returns correct results** → **Functional** (checks accuracy of functionality).  
+4. **Testing if the app can handle a sudden spike of 5,000 new users in 1 minute** → **Performance** (validates resilience under spike load).
+
+---
+
+## 4. Example App: BookMyShow
+
+- **Feature 1: Ticket Booking during movie release**
+  - Metric: **TPS** — ensures thousands of bookings per second are processed without failures.
+  - Why: High concurrency during blockbuster releases.
+
+- **Feature 2: Payment Gateway**
+  - Metric: **Error Rate** — critical to minimize failed transactions.
+  - Why: Even small error rates cause revenue loss and user frustration.
+
+- **Feature 3: Event Search & Listing**
+  - Metric: **Response Time** — users expect instant search results.
+  - Why: Slow search leads to drop‑offs and poor user experience.
+
+---
+
+## ✅ Conclusion
+Performance testing ensures apps like Flipkart, Myntra, Zomato, Swiggy, or BookMyShow remain **fast, reliable, and scalable** during high‑pressure events such as flash sales or ticket launches. By applying the right test type and monitoring the right metrics, teams can prevent downtime, reduce failures, and deliver smooth user experiences.
