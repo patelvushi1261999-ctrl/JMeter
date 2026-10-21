@@ -1,0 +1,59 @@
+# Flipkart Load Test Assignment (Apache JMeter)
+
+---
+
+## 1. Create Test Plan
+- Open JMeter.
+- Add a **Test Plan** → name it `Flipkart Load Test`.
+- Add a **Thread Group**:
+  - Number of Threads (Users): **5**
+  - Loop Count: **2**
+
+---
+
+## 2. Add HTTP Request Sampler
+- Inside the Thread Group, add an **HTTP Request Sampler**.
+- Configure:
+  - Method: **GET**
+  - Server Name or IP: `jsonplaceholder.typicode.com`
+  - Path: `/posts`
+- This simulates fetching all posts from the placeholder API.
+
+---
+
+## 3. Add View Results Tree Listener
+- Right‑click Thread Group → Add → Listener → **View Results Tree**.
+- Run the Test Plan.
+- **Observation**:
+  - Each request shows **Response Time** (e.g., ~150–300 ms).
+  - **Status**: HTTP 200 OK for successful requests.
+  - **Sampler Result**: Displays request details, response code, and size.
+  - **Response Data**: JSON array of posts returned by the API.
+
+---
+
+## 4. Add Constant Timer
+- Right‑click Thread Group → Add → Timer → **Constant Timer**.
+- Set **Thread Delay**: **2000 ms (2 seconds)**.
+- Re‑run the Test Plan.
+- **Comparison**:
+  - Requests are spaced out by 2 seconds.
+  - Overall test duration increases.
+  - Response times remain similar, but execution timeline shows pauses between requests.
+
+---
+
+## 5. Add Response Assertion
+- Right‑click Thread Group → Add → Assertions → **Response Assertion**.
+- Configure:
+  - Field to Test: **Response Code**
+  - Pattern to Test: **200**
+- Run the Test Plan again.
+- **Result**:
+  - All requests pass the assertion if response code is 200.
+  - If any request fails, assertion highlights failure in the listener.
+
+---
+
+
+By combining these elements, you build a realistic load test that checks both **performance** (response times, throughput) and **correctness** (status codes).
