@@ -1,0 +1,57 @@
+# Apache JMeter Assignment
+
+---
+
+## 1. Install & Launch JMeter
+- Download the latest Apache JMeter from the official site: https://jmeter.apache.org/download_jmeter.cgi
+- Extract the ZIP file.
+- Navigate to the **bin** folder and run:
+  - On Windows: `jmeter.bat`
+  - On Linux/Mac: `./jmeter.sh`
+- The JMeter GUI window opens.  
+*(Take a screenshot of the running GUI window and save it for submission.)*
+
+---
+
+## 2. JMeter Folder Structure (Key Folders/Files)
+
+- **bin/**  
+  Contains startup scripts (`jmeter.bat`, `jmeter.sh`) and configuration files. Used to launch JMeter.
+
+- **docs/**  
+  Documentation files explaining JMeter usage, components, and examples.
+
+- **extras/**  
+  Contains additional tools like `ant` scripts for automating JMeter test execution.
+
+- **lib/**  
+  Holds JMeter’s core libraries and third-party JARs required for plugins and samplers.
+
+- **printenv**  
+  Script to print environment variables, useful for debugging JMeter runtime environment.
+
+---
+
+## 3. Create Test Plan: FlipkartSearchTest
+Steps:
+1. Open JMeter.
+2. Add a **Test Plan** → name it `FlipkartSearchTest`.
+3. Add a **Thread Group** inside the Test Plan.
+   - Configure number of threads (e.g., 10), ramp-up period, and loop count.
+4. Inside Thread Group, add an **HTTP Request Sampler**:
+   - Server Name: `www.flipkart.com`
+   - Method: `GET`
+   - Path: `/`
+5. Save the Test Plan as `FlipkartSearchTest.jmx`.
+
+---
+
+## 4. Add Listener & Run Test
+1. Open `FlipkartSearchTest.jmx` in JMeter.
+2. Under Thread Group, add a **View Results Tree** listener.
+3. Run the Test Plan (green ▶ button).
+4. In the **View Results Tree**, you will see:
+   - **Request Details**: URL, method, headers sent.
+   - **Response Data**: HTML content returned by Flipkart’s homepage.
+   - **Sampler Results**: Success/failure status, response code (e.g., 200 OK), response time.
+
