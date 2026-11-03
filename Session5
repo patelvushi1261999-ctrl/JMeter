@@ -1,0 +1,50 @@
+# JMeter Assignment: Timers, Assertions, Controllers
+
+---
+
+## 1. Constant Timer (Flipkart Product Page)
+- Add a **Constant Timer** under the Thread Group.
+- Configure **Thread Delay** = `2000 ms`.
+- Effect: Each virtual user waits exactly 2 seconds before sending the next request, simulating browsing delay on Flipkart product pages.
+
+---
+
+## 2. Uniform Random Timer (Zomato Restaurant Search API)
+- Add a **Uniform Random Timer** under the HTTP Request sampler for the search API.
+- Configure:
+  - Constant Delay Offset = `1000 ms`
+  - Random Delay Maximum = `3000 ms`
+- Effect: Each request waits between 1–4 seconds, mimicking real user think time when searching restaurants.
+
+---
+
+## 3. Response Assertion (Paytm Login API)
+- Add a **Response Assertion** under the Paytm login HTTP Request sampler.
+- Configure:
+  - Field to Test: **Response Code**
+  - Pattern to Test: `200`
+- Add another assertion:
+  - Field to Test: **Response Data**
+  - Pattern to Test: `success`
+- Effect: Ensures login API returns HTTP 200 and contains the word “success” in the response.
+
+---
+
+## 4. Loop Controller (BookMyShow Movie Booking API)
+- Add a **Loop Controller** under the Thread Group.
+- Configure **Loop Count** = `5`.
+- Place the BookMyShow movie booking HTTP Request sampler inside the Loop Controller.
+- Effect: Each user repeats the booking API call 5 times, simulating multiple booking attempts.
+
+---
+
+## 5. Transaction Controller (Swiggy Order Placement Flow)
+- Add a **Transaction Controller** under the Thread Group.
+- Name it: `Swiggy Order Transaction`.
+- Place the following samplers inside:
+  1. Search API (find restaurant/item)
+  2. Add to Cart API
+  3. Checkout API
+- Configure Transaction Controller to “Generate parent sample”.
+- Effect: Groups all steps into one transaction and measures total time taken for the order placement workflow.
+
