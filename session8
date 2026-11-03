@@ -1,0 +1,58 @@
+# JMeter Assignment: Reporting & Analysis
+
+---
+
+## 1. Aggregate Report (Flipkart-Style Product Search API)
+- Run a JMeter load test against a dummy API (e.g., `https://jsonplaceholder.typicode.com/posts`).
+- Add **Aggregate Report** listener under the Thread Group.
+- After execution:
+  - Export results as CSV: `aggregate_report.csv`.
+- CSV contains summary statistics:
+  - Samples, Average, Min, Max, Std. Dev, Error %, Throughput, KB/sec, etc.
+
+---
+
+## 2. Summary Report & Response Time Graph (Zomato-Style Restaurant Search API)
+- Add **Summary Report** listener under Thread Group.
+- Add **Response Time Graph** listener.
+- Run test against dummy API (e.g., `https://jsonplaceholder.typicode.com/comments`).
+- Capture screenshot of both listeners:
+  - **Summary Report**: shows aggregate metrics (average response time, throughput, error %).
+  - **Response Time Graph**: visualizes response times over test duration.
+
+---
+
+## 3. Throughput Graph Analysis
+- After running a load test, open **Throughput Graph** listener.
+- Observations:
+  - **Spikes**: indicate sudden bursts of requests handled quickly.
+  - **Drops**: suggest server bottlenecks or resource contention.
+  - **Plateaus**: show stable throughput, meaning server is consistently handling load.
+- In short: Throughput trend reveals how well the server sustains traffic and highlights performance bottlenecks.
+
+---
+
+## 4. Percentile Response Times (BookMyShow Example)
+- Use **Aggregate Report** listener.
+- Calculate:
+  - **90th percentile**: 90% of requests completed within this time.
+  - **95th percentile**: 95% of requests completed within this time.
+  - **99th percentile**: 99% of requests completed within this time.
+- Meaning for BookMyShow:
+  - Ensures majority of ticket booking requests finish quickly.
+  - High percentiles highlight worst-case delays during peak load.
+  - Critical for user experience during blockbuster releases.
+
+---
+
+## 5. Bottlenecks & Error Patterns
+- Analyze **Summary Report**:
+  - **Error Rate**: % of failed requests.
+  - **95th percentile response time**: shows slowest experiences for most users.
+- Example Findings:
+  - High error rate + long 95th percentile → server overload or inefficient queries.
+- Suggested Improvement:
+  - Optimize database queries or add caching.
+  - Scale infrastructure (e.g., load balancer, additional servers).
+  - Reduce response payload size to improve speed.
+
