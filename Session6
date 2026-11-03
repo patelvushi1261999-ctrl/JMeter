@@ -1,0 +1,97 @@
+
+## 1. Create CSV File
+- File name: **user_login_data.csv**
+- Contains 20 rows with realistic usernames, passwords, and endpoint URLs.
+
+```csv
+username,password,endpoint
+arjun.kapoor,Pass@123,https://reqres.in/api/login
+meera.shah,Secure!456,https://reqres.in/api/login
+rahul.verma,Flipkart#789,https://reqres.in/api/login
+sneha.patel,Zomato$321,https://reqres.in/api/login
+vikram.singh,StrongPwd!999,https://reqres.in/api/login
+isha.mehta,HelloWorld@55,https://reqres.in/api/login
+karan.joshi,MyPwd!2026,https://reqres.in/api/login
+priya.nair,Sunshine#88,https://reqres.in/api/login
+amit.bhatt,SecureLogin!77,https://reqres.in/api/login
+neha.rana,Winter@2026,https://reqres.in/api/login
+rohan.das,FlipkartTest#12,https://reqres.in/api/login
+ananya.iyer,Password!xyz,https://reqres.in/api/login
+deepak.kumar,Login@Secure9,https://reqres.in/api/login
+shruti.menon,TestPwd#44,https://reqres.in/api/login
+manish.gupta,Alpha@1234,https://reqres.in/api/login
+pooja.singh,BetaPwd!567,https://reqres.in/api/login
+sahil.kapoor,Gamma@890,https://reqres.in/api/login
+tanya.sharma,DeltaPwd#22,https://reqres.in/api/login
+vivek.rao,Epsilon@777,https://reqres.in/api/login
+riya.bose,ZetaPwd!999,https://reqres.in/api/login
+2. Configure CSV Data Set Config
+In JMeter Test Plan:
+
+Add CSV Data Set Config.
+
+Filename: user_login_data.csv
+
+Variable Names: username,password,endpoint
+
+Recycle on EOF: True
+
+Stop thread on EOF: False
+
+Effect: Each thread reads a different row (username, password, endpoint).
+
+3. Parameterize API Endpoint
+In HTTP Request Sampler:
+
+Method: POST
+
+Server Name or IP: ${endpoint}
+
+Body Data:
+
+json
+{
+  "email": "${username}",
+  "password": "${password}"
+}
+Add HTTP Header Manager:
+
+Content-Type: application/json
+
+4. Zomato-Style Login Flow with Correlation
+Step 1: Login Request (POST).
+
+Step 2: Add Regular Expression Extractor:
+
+Reference Name: sessionToken
+
+Regex: "token":"(.+?)"
+
+Template: $1$
+
+Step 3: Follow-up Request (Order History API):
+
+Method: GET
+
+URL: https://reqres.in/api/orders
+
+Add Header: Authorization: Bearer ${sessionToken}
+
+Effect: Demonstrates correlation — using extracted token in subsequent request.
+
+5. Run Data-Driven Workflow
+Import user_login_data.csv into JMeter.
+
+Run Test Plan:
+
+Each thread logs in with unique credentials.
+
+Session token extracted and reused.
+
+Order history fetched for each user.
+
+Results:
+
+View Results Tree shows request/response for each user.
+
+Assertion ensures response code = 200 and contains “success”.
