@@ -1,0 +1,53 @@
+# JMeter Assignment: Flipkart-Style Flash Sale Load Test
+
+---
+
+## 1. Initial Test Plan
+- Open JMeter.
+- Create a **Test Plan** named `Flipkart Flash Sale`.
+- Add a **Thread Group**:
+  - Number of Threads (Users): **50**
+  - Ramp-up Period: **300 seconds (5 minutes)**
+  - Loop Count: **1**
+- Effect: Simulates 50 users gradually starting over 5 minutes, each making one request.
+
+---
+
+## 2. Modify Thread Group
+- Increase **Number of Threads** to **200**.
+- Clear **Loop Count** field.
+- Set **Duration (seconds)** = **600 (10 minutes)**.
+- Effect: Test runs for a fixed 10 minutes regardless of iterations, simulating sustained load.
+
+---
+
+## 3. Constant Throughput Timer
+- Add a **Constant Throughput Timer** under the Thread Group.
+- Configure:
+  - Target Throughput: **100 requests per minute**
+  - Calculate Throughput based on: **All active threads**
+- Effect: Maintains controlled load, similar to Zomato food ordering rush.
+
+---
+
+## 4. Configure Local Mock API Endpoint
+- Add an **HTTP Request Sampler**:
+  - Method: **GET**
+  - URL: `http://localhost:8080/api/products`
+- Ensure environment setup:
+  - Close unnecessary browser tabs.
+  - Stop background apps.
+  - Run only the mock API server locally.
+- Effect: Prevents resource contention and ensures accurate test results.
+
+---
+
+## 5. Analyze Results
+After running the 200-user, 10-minute test:
+
+- **Observation 1 (Ramp-up Time)**  
+  With a 5-minute ramp-up, users joined gradually, so initial response times were stable. As more users joined, response times increased slightly due to higher concurrency.
+
+- **Observation 2 (Number of Users)**  
+  Increasing from 50 to 200 users significantly raised throughput. However, response times showed occasional spikes, indicating server strain under heavier load.
+
