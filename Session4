@@ -1,0 +1,78 @@
+# JMeter Assignment: Swiggy & Flipkart API Testing
+
+---
+
+## 1. GET Request to Swiggy Restaurant Listing API (or Public API)
+- Open JMeter.
+- Create a **Test Plan** → Add a **Thread Group**.
+- Inside Thread Group, add an **HTTP Request Sampler**:
+  - Method: **GET**
+  - Example Public API: `https://jsonplaceholder.typicode.com/posts`
+- Run the test.
+- **Observation**:
+  - Response Status: `200 OK`
+  - Response Data: JSON array of posts (or restaurant listings if Swiggy API is accessible).
+- Log results in **View Results Tree** listener.
+
+---
+
+## 2. POST Request to Mock API (Login)
+- Add another **HTTP Request Sampler**.
+- Configure:
+  - Method: **POST**
+  - URL: `https://reqres.in/api/login`
+  - Body Data:
+    ```json
+    {
+      "email": "eve.holt@reqres.in",
+      "password": "cityslicka"
+    }
+    ```
+- Add **HTTP Header Manager**:
+  - `Content-Type: application/json`
+- Run the test.
+- **Observation**:
+  - Response Status: `200 OK`
+  - Response Data: JSON with login token (e.g., `{ "token": "QpwL5tke4Pnpja7X4" }`).
+
+---
+
+## 3. Flipkart Search with Parameters
+- Add another **HTTP Request Sampler**.
+- Configure:
+  - Method: **GET**
+  - URL: `https://www.flipkart.com/search`
+  - Parameters:
+    - `q` = `${searchTerm}`
+- Add **User Defined Variables**:
+  - `searchTerm=mobile`
+- Duplicate Thread Group or run with different variable values:
+  - Example: `searchTerm=headphones`
+- Run test with multiple search terms.
+
+---
+
+## 4. Record Workflow with HTTP(S) Test Script Recorder
+- Open JMeter → Add **HTTP(S) Test Script Recorder**.
+- Configure browser proxy to JMeter’s port (default 8888).
+- Perform workflow in browser:
+  1. Log in to demo e-commerce site.
+  2. Search for a product.
+  3. Log out.
+- Stop recording.
+- **Recorded Script** contains samplers:
+  - Login request sampler.
+  - Search request sampler.
+  - Logout request sampler.
+
+---
+
+## 5. Parameterize Workflow
+- Edit recorded samplers:
+  - Replace hardcoded login credentials with variables:
+    - `${username}`, `${password}`
+  - Replace search term with `${searchTerm}`.
+- Add **User Defined Variables** or **CSV Data Set Config** to supply multiple sets of credentials and search terms.
+- Run test → different users and searches executed in same run.
+
+---
