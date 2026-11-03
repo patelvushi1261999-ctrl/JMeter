@@ -1,0 +1,74 @@
+## 1. Extract Session Token (Login API)
+- Add an **HTTP Request Sampler** for the login API (e.g., `https://reqres.in/api/login`).
+- Method: **POST**
+- Body Data:
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "password123"
+  }
+Add HTTP Header Manager: Content-Type: application/json
+
+Add Regular Expression Extractor:
+
+Reference Name: sessionToken
+
+Regex: "token":"(.+?)"
+
+Template: $1$
+
+Effect: Captures the session token from the JSON response.
+
+2. Chain APIs (Login → Order History)
+Step 1: Login API (extract token).
+
+Step 2: Add another HTTP Request Sampler for Get Order History API (e.g., https://reqres.in/api/orders).
+
+Configure Header:
+
+Authorization: Bearer ${sessionToken}
+
+Effect: Token from login is reused dynamically in the next request.
+
+3. Response Assertion (Order History API)
+Add Response Assertion under the Order History sampler.
+
+Configure:
+
+Field to Test: Response Data
+
+Pattern to Test: orderId
+
+Effect: Test fails if orderId is not found in the response.
+
+4. Modularize Test Plan
+Create a Test Fragment or Module Controller named Login Module.
+
+Place the Login API sampler and Regular Expression Extractor inside.
+
+In main Test Plan, use Module Controller or Include Controller to call Login Module.
+
+Effect: Reusable login logic that can be invoked from multiple workflows.
+
+5. Simulate 50 Virtual Users
+Configure Thread Group:
+
+Number of Threads: 50
+
+Ramp-up Period: e.g., 60 seconds
+
+Loop Count: 1 (or duration-based)
+
+Each user:
+
+Executes Login Module.
+
+Fetches Order History with extracted token.
+
+Analyze results:
+
+Use Aggregate Report or Summary Report.
+
+Find Average Response Time for Get Order History API.
+
+Example: Average response time = ~250 ms under 50 concurrent users.
